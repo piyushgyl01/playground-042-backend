@@ -60,6 +60,27 @@ app.get("/mangas/:id", async (req, res) => {
   }
 });
 
+app.post("/mangas", async (req, res) => {
+  const { coverURL, title, description, author } = req.body;
+
+  if (!coverURL || !title || !description || !author) {
+    return res
+      .status(404)
+      .json({ message: "Please fill in all required fields" });
+  }
+
+  try {
+    const newManga = new Manga({ coverURL, title, description, author });
+    const savedManga = await newManga.save();
+
+    res.status(201).json(savedManga);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(4000, () => {
   console.log("App is listening on PORT 4000");
 });
