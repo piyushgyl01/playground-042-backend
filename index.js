@@ -81,6 +81,24 @@ app.post("/mangas", async (req, res) => {
   }
 });
 
+app.put("/mangas/:id", async (req, res) => {
+  try {
+    const editedManga = await Manga.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    if (!editedManga) {
+      return res.status(404).json({ message: "Manga not found" });
+    }
+
+    res.json(editedManga);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(4000, () => {
   console.log("App is listening on PORT 4000");
 });
