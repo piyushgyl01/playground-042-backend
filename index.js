@@ -99,6 +99,22 @@ app.put("/mangas/:id", async (req, res) => {
   }
 });
 
+app.delete("/mangas/:id", async (req, res) => {
+  try {
+    const deletedManga = await Manga.findOneAndDelete(req.params.id);
+
+    if (!deletedManga) {
+      return res.status(404).json({ message: "Manga not found" });
+    }
+
+    res.json(deletedManga)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(4000, () => {
   console.log("App is listening on PORT 4000");
 });
