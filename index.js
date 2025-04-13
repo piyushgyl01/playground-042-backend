@@ -107,7 +107,7 @@ app.delete("/mangas/:id", async (req, res) => {
       return res.status(404).json({ message: "Manga not found" });
     }
 
-    res.json(deletedManga)
+    res.json(deletedManga);
   } catch (error) {
     res
       .status(500)
