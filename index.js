@@ -101,7 +101,7 @@ app.put("/mangas/:id", async (req, res) => {
 
 app.delete("/mangas/:id", async (req, res) => {
   try {
-    const deletedManga = await Manga.findOneAndDelete(req.params.id);
+    const deletedManga = await Manga.findByIdAndDelete(req.params.id);
 
     if (!deletedManga) {
       return res.status(404).json({ message: "Manga not found" });
